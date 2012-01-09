@@ -1,0 +1,89 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources
+END
+EtaoTuanSettingDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/twc/!svn/ver/14556/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanSettingDataSource.h
+END
+EtaoGroupBuyLocationDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/twc/!svn/ver/14737/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuyLocationDataSource.h
+END
+EtaoTAHttpRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14046/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTAHttpRequest.m
+END
+EtaoTuanSettingHttpRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/twc/!svn/ver/14046/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanSettingHttpRequest.m
+END
+EtaoTuanAuctionDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/twc/!svn/ver/14556/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanAuctionDataSource.h
+END
+EtaoTuanSettingDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/twc/!svn/ver/14123/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanSettingDataSource.m
+END
+EtaoGroupBuySettingDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuySettingDataSource.h
+END
+EtaoGroupBuyLocationDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/twc/!svn/ver/14931/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuyLocationDataSource.m
+END
+EtaoTuanAuctionDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/twc/!svn/ver/14391/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanAuctionDataSource.m
+END
+EtaoGroupBuyAuctionDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuyAuctionDataSource.h
+END
+EtaoGroupBuySettingDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/twc/!svn/ver/14819/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuySettingDataSource.m
+END
+EtaoTAHttpRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14046/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTAHttpRequest.h
+END
+EtaoTuanSettingHttpRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/twc/!svn/ver/14046/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoTuanSettingHttpRequest.h
+END
+EtaoGroupBuyAuctionDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/Classes/etao_tuan/EtaoTuanDataSources/EtaoGroupBuyAuctionDataSource.m
+END

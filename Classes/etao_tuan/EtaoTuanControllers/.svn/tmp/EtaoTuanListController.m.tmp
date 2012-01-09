@@ -1,0 +1,610 @@
+
+//
+//  EtaoTuanListController.m
+//  EtaoTableViewFramework
+//
+//  Created by 左 昱昊 on 11-11-14.
+//  Copyright 2011年 __MyCompanyName__. All rights reserved.
+//
+
+#import "EtaoTuanListController.h"
+#import "TBMemoryCache.h"
+#import "EtaoTuanDetailSwipeController.h"
+#import <AudioToolbox/AudioToolbox.h>
+#import "EtaoTimerController.h"
+#import "EtaoTimeLabel.h"
+#import "EtaoLoadMoreCell.h"
+#import "EtaoGroupBuyListCell.h"
+#import "ETHttpImage.h"
+
+@implementation EtaoTuanListController
+@synthesize datasourceKey = _datasourceKey;
+@synthesize imageHttp = _imageHttp;
+
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [super initWithStyle:style];
+    if (self) {
+        // Custom initialization
+ //       _update_lock = NO;
+        
+    }
+    return self;
+}
+
+- (void)didReceiveMemoryWarning
+{
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+    
+    // Release any cached data, images, etc that aren't in use.
+}
+
+#pragma mark - View lifecycle
+
+- (void)dealloc
+{
+    EtaoGroupBuyAuctionDataSource* datasource1 = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:self.datasourceKey];
+    [ datasource1 removeObserver:self forKeyPath:@"status"];
+    EtaoGroupBuyLocationDataSource* datasource2 = (EtaoGroupBuyLocationDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:[EtaoGroupBuyLocationDataSource keyName:nil]];
+    [datasource2 removeObserver:self forKeyPath:@"status"];
+    
+    if(_refreshHeaderView!=nil){
+        _refreshHeaderView.delegate = nil;
+        [_refreshHeaderView release];
+        _refreshHeaderView = nil;
+    }    
+    if(_refreshTailerView!=nil){
+        _refreshTailerView.delegate = nil;
+        [_refreshTailerView release];
+        _refreshTailerView = nil;
+    }
+    if (_items != nil){
+        [_items removeAllObjects];
+        [_items release];
+        _items = nil;
+    }
+    if (_imageHttp != nil) {
+        [_imageHttp release];
+        _imageHttp = nil;
+    }
+    
+    [super dealloc];
+}
+- (void) loadView{
+    [super loadView];
+
+    self.imageHttp = [[[ETHttpImage alloc]init]autorelease];
+    _imageHttp.queue = _queue;
+    
+    _tailer_reloading = NO;
+    //初始化本地数组     
+    _items = [[NSMutableArray alloc]init];
+    [self.tableView setSeparatorColor:[UIColor colorWithRed:232/255.0 green:232/255.0 blue:232/255.0 alpha:1]];
+    [self.tableView setContentSize:CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.size.height)];
+    
+    //初始化头部的下拉刷新View，retainCount = 2
+    _refreshHeaderView = [[EGORefreshTableHeaderView alloc]initWithFrame:
+                          CGRectMake(0.0f, 0.0f-self.tableView.frame.size.height,self.tableView.frame.size.width,self.tableView.bounds.size.height)]; 
+    _refreshHeaderView.delegate = self;
+    [self.tableView addSubview:_refreshHeaderView];
+    
+    //初始化底部的上拉更新View，retainCount = 2
+    _refreshTailerView = [[EGORefreshTableTailerView alloc]initWithFrame:
+                          CGRectMake(0.0f, 0, self.tableView.frame.size.width,106)]; 
+    _refreshTailerView.delegate = self;
+
+    EtaoGroupBuyAuctionDataSource* datasource = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter]getDataSourceWithKey:_datasourceKey];
+    if(datasource.status == ET_DS_GROUPBUY_AUCTION_LOCAL){
+        [self performSelector:@selector(pullDownLikeManDoes) withObject:nil afterDelay:0.0];
+    }
+    else{
+        [self items2items:datasource.items toItems:_items];
+    }
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+//开始加载数据
+- (void)reloadTableViewDataSource{ 
+    _tailer_reloading=YES;
+    NSLog(@"==开始加载数据");  
+}
+
+#pragma mark - Table view delegate
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{  
+    return _items.count+1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    return [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
+    static NSString *CellIdentifier = @"Cell";
+    static NSString *moreCellId = @"moreCell"; 
+    
+    NSUInteger row = [indexPath row];
+	NSUInteger count = [_items count];
+    
+    if (row == count ) { 
+		EtaoLoadMoreCell * cell = (EtaoLoadMoreCell*)[tableView dequeueReusableCellWithIdentifier:moreCellId];
+		if (cell == nil) {
+			cell = [[[EtaoLoadMoreCell alloc]  initWithStyle:UITableViewCellStyleDefault reuseIdentifier:moreCellId] autorelease];
+            UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+            selectedView.backgroundColor = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0];
+            cell.selectedBackgroundView = selectedView;   //设置选中后cell的背景颜色
+            [selectedView release];
+		} 
+		return cell; 
+	}
+    else
+    {
+        EtaoGroupBuyListCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[[EtaoGroupBuyListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+            //     [cell initCellwithSubFram:CGRectMake(2, 10, 110, 80) withContent:CGRectMake(0, 0, 320, 106)];
+            cell.queue = _queue;
+            [cell setImageFrame:CGRectMake(2, 10, 110, 80)];            
+            UIView *selectedView = [[UIView alloc] initWithFrame:cell.frame];
+            selectedView.backgroundColor = [UIColor colorWithRed:220/255.0f green:220/255.0f blue:220/255.0f alpha:1.0];
+            cell.selectedBackgroundView = selectedView;   //设置选中后cell的背景颜色
+        } 
+        else
+        {
+ //           [cell.httpImage.http setQueuePriority:NSOperationQueuePriorityVeryLow];
+        }
+        
+        if ([_items count] == 0 ) {
+            return cell;
+        }
+        
+        EtaoTuanAuctionItem* item = [_items objectAtIndex:indexPath.row];
+        NSString *picturl = [NSString stringWithFormat:@"http://img03.taobaocdn.com/bao/uploaded/i3/%@_120x120.jpg",item.image];
+        [cell setItem:item url:picturl];
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+        return cell;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 106;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if(indexPath.row < _items.count){
+/*        EtaoTuanAuctionItem* item = [_items objectAtIndex:indexPath.row];
+        EtaoTuanListDetailController* listDetail = [[[EtaoTuanListDetailController alloc]init]autorelease];
+        listDetail.item = item;
+        listDetail.title = @"详情页";
+        [[EtaoTuanHomeViewController getNavgationController] pushViewController:listDetail animated:YES];
+ */
+
+        EtaoTuanDetailSwipeController *detailSwipe = [[[EtaoTuanDetailSwipeController alloc]init]autorelease];
+        detailSwipe.detailsDataSourceItems = _items;
+        detailSwipe.navTitle = [NSString stringWithFormat:@"%@",self.title];
+        detailSwipe.cls = [EtaoTuanListDetailController class];
+        [detailSwipe setDetailByIndex:indexPath.row];
+        [[EtaoTuanHomeViewController getNavgationController] pushViewController:detailSwipe animated:YES];
+    }
+    
+    [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-SelectIndexInList"];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+   
+    [super tableView:tableView willDisplayCell:cell forRowAtIndexPath:indexPath];
+    
+	NSUInteger row = [indexPath row];
+	NSUInteger count = [_items count];
+	
+	// load more
+	if (count == 0 || row == [_items count] || _tailer_reloading) {
+		return;
+	}
+	
+	if (row > count - 10 ) {
+        [self reloadTableViewDataSource]; //开始加载
+        [self performSelector:@selector(pullUp) withObject:nil afterDelay:0];
+	}     
+}
+
+#pragma mark -v datasource event respond function
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if([object isKindOfClass:[EtaoGroupBuyAuctionDataSource class]]){
+        EtaoGroupBuyAuctionDataSource* datasource = object;
+        ET_DS_GROUPBUY_AUCTION_STATUS status = [[change objectForKey:@"new"] intValue];
+        switch (status) {
+            case ET_DS_GROUPBUY_AUCTION_OK: //数据加载完成
+                if(_header_reloading)
+                    [self performSelector:@selector(doneRefreshTableViewData) withObject:nil afterDelay:0.0];
+                else if(_tailer_reloading)
+                    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.0];
+                [self items2items:datasource.items toItems:_items];
+                break;
+            case ET_DS_GROUPBUY_AUCTION_ERROR:
+            case ET_DS_GROUPBUY_AUCTION_FAIL:
+                if(_header_reloading)
+                    [self performSelector:@selector(doneRefreshTableViewData) withObject:nil afterDelay:0.0];
+                else if(_tailer_reloading)
+                    [self performSelector:@selector(doneLoadingTableViewData) withObject:nil afterDelay:0.0];
+                [_refreshHeaderView setStatus:@"更新失败"];
+                break;
+            case ET_DS_GROUPBUY_AUCTION_LOADING: //加载数据中
+                break;
+            default:
+                break;
+        }
+    }
+    else if([object isKindOfClass:[EtaoGroupBuyLocationDataSource class]]){
+        ET_DS_GROUPBUY_LOCATION_STATUS new_status = [[change objectForKey:@"new"] intValue];
+        EtaoGroupBuyAuctionDataSource* datasource = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:_datasourceKey];
+        EtaoGroupBuyLocationDataSource* location = object;
+        switch (new_status) {
+            case ET_DS_GROUPBUY_LOCATION_CHANGE: //数据有改变，要重新请求
+                {
+                    NSString* latitude = [NSString stringWithFormat:@"%f",location.currentLocation.coordinate.latitude];
+                    NSString* longitude = [NSString stringWithFormat:@"%f",location.currentLocation.coordinate.longitude];
+                    if(latitude !=nil && location!=nil){
+                        [datasource.query setObject:latitude forKey:@"dist_y"];
+                        [datasource.query setObject:longitude forKey:@"dist_x"];
+                        [datasource.query setObject:@"y" forKey:@"lbs"];
+                    }
+                    if(location.currentCity!=nil){
+                        if([location.currentCity isEqualToString:location.realityCity]){
+                            [datasource.query setObject:@"y" forKey:@"lbs"];
+                        }
+                        else{
+                             [datasource.query setObject:@"n" forKey:@"lbs"];
+                        }
+                        [datasource.query setObject:location.currentCity forKey:@"city"];
+                    }
+                    [datasource performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:NO];
+                }
+                break;
+            case ET_DS_GROUPBUY_LOCATION_GPSOK:
+            case ET_DS_GROUPBUY_LOCATION_OK:
+                [_refreshHeaderView setStatus: @"定位成功，更新中..."];
+                break;
+            case ET_DS_GROUPBUY_LOCATION_GPSFAIL:
+                [_refreshHeaderView setStatus:@"定位失败，更新中..."];
+                [datasource performSelectorOnMainThread:@selector(reload) withObject:nil waitUntilDone:NO];
+                break;
+            case ET_DS_GROUPBUY_LOCATION_LOCAL: //定位中
+                [_refreshHeaderView setStatus:@"定位中..."];
+                break;
+            default:
+                break;
+        }
+    }
+}
+
+#pragma mark -v EGO delegate callback
+/* 下拉回调 EGO  */
+//停止更新数据
+- (void)stopRefresh{
+    if(_header_reloading){
+        _header_reloading = NO;
+        [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+        NSLog(@"==停止更新数据");
+    }
+    else if(_tailer_reloading){
+        _tailer_reloading=NO;
+        [_refreshTailerView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+        NSLog(@"==停止加载数据");
+    }
+}
+
+//开始更新数据
+- (void)refreshTableViewDataSource{ 
+    _header_reloading=YES;
+    NSLog(@"==开始更新数据");  
+}
+
+//结束更新数据
+- (void)doneRefreshTableViewData{ 
+    _header_reloading=NO;
+    NSLog(@"==结束更新数据"); 
+    [_refreshHeaderView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+} 
+
+//结束加载数据
+- (void)doneLoadingTableViewData{ 
+    _tailer_reloading=NO;
+    NSLog(@"==结束加载数据"); 
+    [_refreshTailerView egoRefreshScrollViewDataSourceDidFinishedLoading:self.tableView];
+} 
+
+- (BOOL)egoRefreshTableHeaderDataSourceIsLoading:(EGORefreshTableHeaderView*)view{ 
+    return _header_reloading; 
+} 
+
+- (BOOL)egoRefreshTableTailerDataSourceIsLoading:(EGORefreshTableTailerView*)view{ 
+    return _tailer_reloading; 
+}
+
+//下拉触发
+- (void)egoRefreshTableHeaderDidTriggerRefresh:(EGORefreshTableHeaderView*)view{ 
+    [self refreshTableViewDataSource]; //开始加载
+    [self pullDown];
+}
+
+//纪录最后更新时间
+- (NSDate*)egoRefreshTableHeaderDataSourceLastUpdated:(EGORefreshTableHeaderView*)view{ 
+    return [NSDate date];     
+}
+
+//上拉触发
+- (void)egoRefreshTableTailerDidTriggerRefresh:(EGORefreshTableTailerView*)view{ 
+    [self reloadTableViewDataSource]; //开始加载
+    [self pullUp];
+}
+
+//纪录最后更新时间
+- (NSDate*)egoRefreshTableTailerDataSourceLastUpdated:(EGORefreshTableTailerView*)view{ 
+    return [NSDate date];
+}
+
+/* EGO Common */
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [_refreshHeaderView egoRefreshScrollViewDidScroll:scrollView];
+    [_refreshTailerView egoRefreshScrollViewDidScroll:scrollView];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    [_refreshHeaderView egoRefreshScrollViewDidEndDragging:scrollView]; 
+    [_refreshTailerView egoRefreshScrollViewDidEndDragging:scrollView]; 
+}
+
+#pragma mark -v event trigger
+
+/* 事件触发 */
+- (void)pullDownLikeManDoes
+{
+    //初始化，下拉
+    self.tableView.contentOffset = CGPointMake(0, -60);
+    self.tableView.contentInset = UIEdgeInsetsMake(60, 0.0f, 0.0f, 0.0f);
+    [_refreshHeaderView setState:EGOOPullRefreshLoading];
+    [self refreshTableViewDataSource]; //开始更新
+    [self performSelector:@selector(pullDown) withObject:self afterDelay:0.5];
+}
+
+- (void)pullDown
+{ 
+    EtaoGroupBuyLocationDataSource* location = (EtaoGroupBuyLocationDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:[EtaoGroupBuyLocationDataSource keyName:nil]];
+    EtaoGroupBuySettingDataSource* setting = (EtaoGroupBuySettingDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:[EtaoGroupBuySettingDataSource keyName:nil]];
+    
+    EtaoGroupBuyAuctionDataSource* datasource = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:_datasourceKey];
+    
+    
+    //重设datasource
+    if(setting.status == ET_DS_GROUPBUY_SETTING_OK){
+        for(EtaoTuanSettingItem* cell in [setting getSelectedItems]){
+            if([datasource.tag isEqualToString:cell.tag]){
+                datasource.settingItem = cell;
+            }
+        }
+    }
+    
+    //判断当前gps状态
+    if(location.status == ET_DS_GROUPBUY_LOCATION_CHANGE){
+        [_refreshHeaderView setStatus:@"定位成功，更新中..."];
+        NSString* latitude = [NSString stringWithFormat:@"%f",location.currentLocation.coordinate.latitude];
+        NSString* longitude = [NSString stringWithFormat:@"%f",location.currentLocation.coordinate.longitude];
+        [datasource.query setObject:latitude forKey:@"dist_y"];
+        [datasource.query setObject:longitude forKey:@"dist_x"];
+        [datasource.query setObject:@"y" forKey:@"lbs"];
+        if(location.currentCity!=nil){
+            [datasource.query setObject:location.currentCity forKey:@"city"];
+        }
+        [datasource reload];
+    }
+    else if(location.status == ET_DS_GROUPBUY_LOCATION_GPSFAIL){
+        [_refreshHeaderView setStatus:@"定位失败，更新中..."];
+        [datasource reload];
+    }
+    else{
+        [_refreshHeaderView setStatus:@"定位中..."];
+    }
+    
+    [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-RefreshList"];
+}
+
+- (void)pullUp
+{ 
+    EtaoGroupBuyAuctionDataSource* datasource = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:_datasourceKey];
+    [datasource loadmore];
+    [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-ReloadList"];
+}
+
+#pragma mark -v Watch
+/* 监视相关*/
+
+- (void)watchWithKey:(NSString *)key{
+    self.datasourceKey = key;
+    EtaoGroupBuyAuctionDataSource* datasource = (EtaoGroupBuyAuctionDataSource*)[[ETDataCenter dataCenter] getDataSourceWithKey:_datasourceKey];
+    [datasource addObserver:self 
+                 forKeyPath:@"status" 
+                    options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld 
+                    context:nil];
+}
+
+- (void)watchWithDatasource:(id)datasource{
+    [datasource addObserver:self 
+                 forKeyPath:@"status" 
+                    options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld 
+                    context:nil];
+}
+
+#pragma mark -v Display Fuctions
+
+/* 图片相关 */
+
+//把队列分组装进另一个队列里
+- (void)items2items:(NSMutableArray *)items1 toItems:(NSMutableArray *)items2
+{
+    EtaoTuanAuctionItem *item_tmp1;
+    EtaoTuanAuctionItem *item_tmp2;
+    NSString *picturl;
+    for (int i=0; i<[items1 count]; i++) {
+        
+        item_tmp1 = [items1 objectAtIndex:i];        
+        if (i<[items2 count]) {
+            item_tmp2 = [items2 objectAtIndex:i];
+            if ([item_tmp1.image isEqualToString:item_tmp2.image] ) {
+                continue;
+            }
+        }
+        picturl = [NSString stringWithFormat:@"http://img03.taobaocdn.com/bao/uploaded/i3/%@_120x120.jpg",item_tmp1.image];
+        [_imageHttp setItem:item_tmp1 url:picturl];
+    }
+    
+    [items2 removeAllObjects];
+    EtaoTuanAuctionItem* item;
+    for (item in items1){
+        [items2 addObject:item];
+    }
+    [self.tableView reloadData];
+}
+
+- (void)item2cell:(EtaoTuanAuctionItem*)item toCell:(UITableViewCell *)cell
+{
+    
+    for (UIView *v in [cell subviews]) {
+		if ([ v isKindOfClass:[UILabel class]] ||
+			[ v isKindOfClass:[HTTPImageView class]]||
+            [v isKindOfClass:[EGORefreshTableTailerView class]] ||
+            [v isKindOfClass:[UIImageView class]] ||
+            [v isKindOfClass:[EtaoTimeLabel class]] ) {
+            [[EtaoTimerController sharedTimeLabelPointerArray]removeObject:v];
+			[v removeFromSuperview];
+		} 
+        
+	} 
+    
+    UIFont *titleFont = [UIFont systemFontOfSize:14];
+	UIColor *titleColor = [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1.0];
+	UIFont *priceFont = [UIFont fontWithName:@"Arial-BoldMT" size:21]; 
+	UIColor *priceColor = [UIColor colorWithRed:226/255.0f green:43/255.0f blue:80/255.0f alpha:1.0] ;  
+    UIFont *salesFont = [UIFont systemFontOfSize:15];
+    UIColor *salesColor = [UIColor colorWithRed:51/255.0f green:51/255.0f blue:51/255.0f alpha:1.0];
+    
+    UILabel* titleLabel = [[[UILabel alloc ] initWithFrame:CGRectMake(120, 10, 180, 34)] autorelease];
+    titleLabel.backgroundColor = [UIColor clearColor];
+    titleLabel.text = [NSString stringWithFormat:@"[%@]%@",item.webName,[item titleStr]];  
+    
+    titleLabel.font = titleFont;
+    titleLabel.textColor = titleColor;
+    titleLabel.textAlignment = UITextAlignmentLeft ;
+    titleLabel.numberOfLines = 2;
+    //首行顶对齐
+    CGRect textRect = [titleLabel textRectForBounds:titleLabel.frame limitedToNumberOfLines:titleLabel.numberOfLines];
+    [titleLabel setFrame:CGRectMake(120, 10, textRect.size.width, textRect.size.height)];
+    
+    UIImageView* rmbImgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"rmb_price.png"]] autorelease];
+    [rmbImgView setFrame:CGRectMake(120, 53, 9, 11)];
+	CGSize sizeTuan = [[NSString stringWithFormat:@"%@",item.price] sizeWithFont:priceFont];
+	UILabel* priceLabel = [[[UILabel alloc ] initWithFrame:CGRectMake(133, 47, sizeTuan.width, 20)] autorelease];
+	priceLabel.backgroundColor = [UIColor clearColor];
+	priceLabel.text = item.price;
+	priceLabel.font = priceFont; 
+	priceLabel.numberOfLines = 1 ;
+	priceLabel.textColor = priceColor;
+    
+    UIImageView* salesImgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"black_people.png"]] autorelease];
+    [salesImgView setFrame:CGRectMake(120,75, 13, 13)];    
+    UILabel *salesLabel = [[[UILabel alloc] initWithFrame:CGRectMake(138, 77, 120, 14)]autorelease];
+    salesLabel.numberOfLines = 1;
+    salesLabel.textColor = salesColor;
+    salesLabel.font = salesFont;
+    salesLabel.backgroundColor = [UIColor clearColor];
+    [salesLabel setText:[NSString stringWithFormat:@"%d", [item.sales intValue]]]; 
+    
+    UIImageView* distanceImgView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"groupBuyDistance.png"]] autorelease];
+    [distanceImgView setFrame:CGRectMake(200,75, 13, 13)];    
+    UILabel *distanceLabel = [[[UILabel alloc] initWithFrame:CGRectMake(218, 77, 120, 14)]autorelease];
+    distanceLabel.numberOfLines = 1;
+    distanceLabel.textColor = salesColor;
+    distanceLabel.font = salesFont;
+    distanceLabel.backgroundColor = [UIColor clearColor];
+    if(nil == item.extInfo || [item.extInfo isEqualToString:@""] || [item.hasLbs isEqualToString:@"0"]) { 
+        [distanceLabel setText:@"未知"];  
+    }
+    else {
+        NSString *distanceStr;
+        if ([item.extInfo doubleValue] > 1) {
+            distanceStr = [NSString stringWithFormat:@"%1.2fkm",[item.extInfo floatValue] ];
+            
+        }else { 
+            distanceStr = [NSString stringWithFormat:@"%gm",[item.extInfo floatValue]*1000];
+        }
+        
+        [distanceLabel setText:distanceStr];  
+    }
+    
+    HTTPImageView *httpImageView = [[[HTTPImageView alloc] initWithFrame: CGRectMake(2, 10, 110, 80)]autorelease];
+    TBMemoryCache *memoryCache = [TBMemoryCache sharedCache];
+    httpImageView.memoryCache = memoryCache ;
+    httpImageView.contentMode = UIViewContentModeScaleAspectFill;
+    httpImageView.placeHolder = [UIImage imageNamed:@"no_picture_80x80.png"];
+    
+    NSString *picturl = [NSString stringWithFormat:@"http://img03.taobaocdn.com/bao/uploaded/i3/%@_120x120.jpg",item.image];
+    [httpImageView setUrl:picturl];
+    CALayer *layer = [httpImageView layer];
+    [layer setMasksToBounds:YES];
+    [layer setCornerRadius:0.0];
+    [layer setBorderWidth:1.0];
+    [layer setBorderColor:[[UIColor colorWithRed:216/255.0f green:216/255.0f blue:216/255.0f alpha:1.0]  CGColor]];
+     
+//    UIImageView *timeImage = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"timelist.png"]]autorelease]; 
+//    timeImage.frame = CGRectMake(0, 0, 100, 26);
+//    
+//    UIImageView *clock = [[[UIImageView alloc]initWithImage:[UIImage imageNamed:@"clock.png"]]autorelease];
+//    clock.frame = CGRectMake(2, 6, 14, 14);
+//    [timeImage addSubview:clock];
+//        
+//    EtaoTimeLabel *timerLabel = [[EtaoTimeLabel alloc]initWithFrame:CGRectMake(18, 16, 80, 14)];
+//    timerLabel.tag = 111;
+//    [[EtaoTimerController sharedTimeLabelPointerArray]addObject:timerLabel];
+//    timerLabel.textColor = [UIColor whiteColor];
+//    [timerLabel setBackgroundColor:[UIColor clearColor]];
+//    timerLabel.font = [UIFont systemFontOfSize:10];
+//    timerLabel.textAlignment = UITextAlignmentLeft;
+//    timerLabel.lineBreakMode = UILineBreakModeCharacterWrap;
+//    timerLabel.item = item;
+//    [timerLabel showLabelText];
+//            
+//    [httpImageView addSubview:timeImage];
+    [cell addSubview:httpImageView];
+//    [cell addSubview: timerLabel];
+//    [timerLabel release];
+    
+    [cell addSubview:titleLabel];
+    [cell addSubview:rmbImgView]; 
+    [cell addSubview:priceLabel];
+    [cell addSubview:salesImgView];
+    [cell addSubview:salesLabel];
+    [cell addSubview:distanceImgView];
+    [cell addSubview:distanceLabel]; 
+}
+
+
+
+/* 重新加载 */
+- (void)reloadData
+{
+}
+
+@end

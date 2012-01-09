@@ -1,0 +1,46 @@
+//
+// Prefix header for all source files of the 'etao4iphone' target in the 'etao4iphone' project
+//
+#define TB_RELEASE(var) { [var release]; var = nil; }
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+	#import <CoreData/CoreData.h>
+    #import <netinet/in.h>
+#endif
+
+#import "ETaoModel.h"
+#import "ETaoNetWorkAlert.h"
+
+//#define	NSLog(...)	{}
+
+#ifndef AUCTION_URL
+//#define AUCTION_URL "http://api.waptest.taobao.com"
+#define AUCTION_URL "http://m.taobao.com"
+#endif
+
+#import <TBSDK/TBSDK.h>
+
+//#define __WAP_TEST__
+
+#define __ETAO_VERSION__ @"1.20"
+
+#define __TTID__ @"201200@etao_iphone_1.2.0"    //appstore
+//#define __TTID__ @"208200@etao_iphone_1.2.0"  //91助手
+//#define __TTID__ @"600179@etao_iphone_1.2.0"  //同步助手
+
+#define TB_RELEASE(var) { [var release]; var = nil; }
+
+
+#define kKeychainServiceName        @"tbsdk_session_data"
+#define kKeychainUsernameKey        @"tbsdk_session_uname"
+#define kKeychainPasswordKey        @"tbsdk_session_passwd"
+#define kKeychainAutoLoginTokenKey  @"tbsdk_session_auto_login_token"
+#define kKeychainTOPSessionKey      @"tbsdk_top_session"
+#define kKeychainWapSessionKey      @"tbsdk_wap_session"
+
+#define kKeychainAccessGroup        @"VG68Y2X7TH.com.taobao.tbsdk"
+
+
+#define NSGBKStringEncoding     CFStringConvertEncodingToNSStringEncoding(kCFStringEncodingGB_18030_2000)

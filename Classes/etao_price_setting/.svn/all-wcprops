@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/repos/twc/!svn/ver/14065/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting
+END
+ETaoUITableViewCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/ETaoUITableViewCell.h
+END
+EtaoTableViewHttpRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoTableViewHttpRequest.m
+END
+EtaoPriceSettingController.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingController.h
+END
+ETaoUITableViewCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/ETaoUITableViewCell.m
+END
+EtaoPriceSettingModuleCell.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingModuleCell.h
+END
+EtaoPriceSettingController.m
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14065/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingController.m
+END
+EtaoPriceSettingHttpRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingHttpRequest.h
+END
+EtaoPriceSettingModuleCell.m
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingModuleCell.m
+END
+EtaoTableViewHttpRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/13764/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoTableViewHttpRequest.h
+END
+EtaoPriceSettingHttpRequest.m
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14065/trunk/twc/etao/ios/etao4iphone/Classes/etao_price_setting/EtaoPriceSettingHttpRequest.m
+END

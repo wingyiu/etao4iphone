@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/repos/twc/!svn/ver/15004/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK
+END
+main.m
+K 25
+svn:wc:ra_dav:version-url
+V 75
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/main.m
+END
+ETHttpRequestTestController.m
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETHttpRequestTestController.m
+END
+AppDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/twc/!svn/ver/14251/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/AppDelegate.h
+END
+AppDelegate.m
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/repos/twc/!svn/ver/14251/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/AppDelegate.m
+END
+ETSDKHome.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETSDKHome.h
+END
+ETHttpRequestTestController.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETHttpRequestTestController.h
+END
+ETSDK-Info.plist
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETSDK-Info.plist
+END
+ETSDK-Prefix.pch
+K 25
+svn:wc:ra_dav:version-url
+V 85
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETSDK-Prefix.pch
+END
+ETSDKHome.m
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/repos/twc/!svn/ver/14252/trunk/twc/etao/ios/etao4iphone/ETSDK/ETSDK/ETSDKHome.m
+END

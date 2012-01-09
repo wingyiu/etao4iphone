@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources
+END
+EtaoPriceAuctionDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceAuctionDataSource.h
+END
+EtaoPriceSettingDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceSettingDataSource.m
+END
+EtaoPriceBuyAuctionDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/twc/!svn/ver/14824/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceBuyAuctionDataSource.h
+END
+EtaoPriceBuySettingDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceBuySettingDataSource.m
+END
+EtaoPriceAuctionDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceAuctionDataSource.m
+END
+EtaoPriceBuyAuctionDataSource.m
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceBuyAuctionDataSource.m
+END
+EtaoPriceSettingDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceSettingDataSource.h
+END
+EtaoPriceBuySettingDataSource.h
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/repos/twc/!svn/ver/14845/trunk/twc/etao/ios/etao4iphone/Classes/etao_price/EtaoPriceDataSources/EtaoPriceBuySettingDataSource.h
+END

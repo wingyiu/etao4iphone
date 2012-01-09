@@ -1,0 +1,411 @@
+//
+//  EtaoTuanSettingController.m
+//  etao4iphone
+//
+//  Created by  on 11-11-23.
+//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//
+
+#import "EtaoTuanHomeViewController.h"
+#import "EtaoUIBarButtonItem.h"
+#import "EtaoTuanSettingItem.h"
+#import "EtaoTuanListController.h"
+#import "ETaoUINavigationController.h"
+#import "EtaoTuanListForMapController.h"
+#import "ETPageTouchView.h"
+
+@implementation EtaoTuanHomeViewController
+@synthesize cells = _cells;
+
+static id staticEtaoTuanHomeViewNav;
+
++ (ETaoUINavigationController*)getNavgationController {
+    return staticEtaoTuanHomeViewNav;
+}
+
+- (id)init{
+    self = [super init];
+    if (self) {   
+        return self;  
+    }
+	return nil; 
+}
+
+-(void)dealloc{
+
+    //数据中心保存
+    //[[ETDataCenter dataCenter]performSelector:@selector(save) withObject:nil afterDelay:0.0];
+   
+    if (_cells != nil) {
+        [_cells removeAllObjects];
+        [_cells release];
+        _cells = nil;
+    }
+    if (_settingBySlide != nil) {
+        [_settingBySlide release];
+        _settingBySlide = nil;
+    }
+    if (_settingByTouch != nil) {
+        [_settingByTouch release];
+        _settingByTouch = nil;
+    }
+    
+    [_slideView release];
+    [_mapView release];
+    
+    [super dealloc];
+}
+- (void)viewWillAppear:(BOOL)animated {
+}
+- (void)loadView
+{
+    [super loadView]; 
+    /* 导航区设置 */
+    //左按钮
+    EtaoUIBarButtonItem *home = [[[EtaoUIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"top_home.png"] target:self action:@selector(UIBarButtonHomeClick:)]autorelease];      
+    self.navigationItem.leftBarButtonItem = home;
+    
+    //右按钮
+    [self showMapButton];
+    
+
+}
+
+- (void)load{
+    //打开定位
+    [[ETLocation location]on];
+    
+    // 地图的map controller
+    _mapView = [[EtaoTuanMapController alloc] init];
+    [_mapView.view setFrame:CGRectMake(0, 0, 320, MAP_HEIGHT+44)];
+    [_mapView.view setHidden:YES];
+    [self.view addSubview:_mapView.view];
+    [_mapView watchWithDatasource:_locationDataSource];
+    
+    //page slider
+    _slideView = [[ETPageSlideController alloc]init];
+    _slideView.delegate = self;
+    [self.view addSubview:_slideView.view];
+    [_slideView.view setFrame:CGRectMake(0, 0, 320, 480)];
+    
+    //初始化 setting的datasource
+    if (nil == _settingDataSource) {
+        if(![[ETDataCenter dataCenter] isExist:[EtaoGroupBuySettingDataSource keyName:nil]]){
+            _settingDataSource = [[EtaoGroupBuySettingDataSource alloc]init];
+            [[ETDataCenter dataCenter]addDataSource:_settingDataSource 
+                                            withKey:[EtaoGroupBuySettingDataSource keyName:nil]];
+        }
+        else{
+            _settingDataSource = (EtaoGroupBuySettingDataSource*)[[ETDataCenter dataCenter]getDataSourceWithKey:[EtaoGroupBuySettingDataSource keyName:nil]];
+        }
+    }
+
+    
+    // 滑动的setting controller
+    _settingBySlide = [[EtaoTuanSettingController alloc]init];
+    [_settingBySlide watchWithKey:[EtaoGroupBuySettingDataSource keyName:nil]];
+    _settingBySlide.title = @"选择分类"; 
+    
+    
+    // 触摸的setting controller
+    _settingByTouch = [[EtaoTuanSettingController alloc]init];
+    [_settingByTouch watchWithKey:[EtaoGroupBuySettingDataSource keyName:nil]];
+    _settingByTouch.title = @"选择分类";
+    
+    [_settingDataSource reload];
+    self.cells = [_settingDataSource getSelectedItems];
+    [_slideView reloadData];
+
+}
+
+-(void)viewDidLoad{
+    [super viewDidLoad];
+    
+    
+    staticEtaoTuanHomeViewNav = self.navigationController;
+    _isMap = NO;
+    
+    /* datsource 初始化 */ 
+    //初始化 location的datasource
+    if(nil == _locationDataSource){
+        if(![[ETDataCenter dataCenter] isExist:[EtaoGroupBuyLocationDataSource keyName:nil]]){
+            _locationDataSource = [[EtaoGroupBuyLocationDataSource alloc]init];
+            [[ETDataCenter dataCenter]addDataSource:_locationDataSource 
+                                            withKey:[EtaoGroupBuyLocationDataSource keyName:nil]];
+        }
+        else{
+            _locationDataSource = (EtaoGroupBuyLocationDataSource*)[[ETDataCenter dataCenter]getDataSourceWithKey:[EtaoGroupBuyLocationDataSource keyName:nil]];
+        }
+    }
+    
+    /* controller初始化 */
+    //中间的城市选择按钮
+    _cityButton = [[[EtaoTuanNavTitleView alloc]initWithFrame:CGRectMake(0, 0, 160, 30)]autorelease];
+    _cityButton.delegate = self;
+    _cityButton.buttonClick = @selector(cityButtonClick:);
+    [_cityButton watchWithKey:[EtaoGroupBuyLocationDataSource keyName:nil]]; //观察地理位置
+    self.navigationItem.titleView = _cityButton;
+    
+    
+    [self.view setFrame:CGRectMake(0, 0, 320, 480)];
+    [self.view setBackgroundColor:[UIColor whiteColor]];
+    
+    [self performSelector:@selector(load) withObject:nil afterDelay:0.0];
+}
+
+
+#pragma mark -TouchView Delegate
+/*********** touchView 代理 ************/
+//轻轻点击导航栏
+- (void)SingleTouch:(id)sender
+{
+    ETPageTouchView *touchView = sender;
+    if (touchView.page ==-1){
+        [EtaoTuanCommonAnimations showShakeAnimation:_slideView.viewBody];
+    }
+    else if(touchView.page == _currentPage){
+       // [self appearSetting];
+    }
+    else if(touchView.page == _currentPage+1){
+        [_slideView reloadPage:[NSNumber numberWithInt:_currentPage+1]];
+    }
+    else if(touchView.page == _currentPage-1){
+        [_slideView reloadPage:[NSNumber numberWithInt:_currentPage-1]];
+    }
+}
+
+//上拨导航栏
+- (void)upSlideTouch:(id)sender{
+    [self disappearMap];
+}
+
+//下拨导航栏
+- (void)downSlideTouch:(id)sender{
+    [self appearMap];
+}
+
+#pragma mark -PageSlider Delegate
+/*********** page slider 代理 **********/ 
+//新的controller需要生成
+- (UIViewController*)pageForColAtIndexPath:(NSNumber *)index
+{
+    if([index intValue]< self.cells.count){
+        EtaoTuanSettingItem* cell = [self.cells objectAtIndex:[index integerValue]];
+        NSString* datasource_key = [EtaoGroupBuyAuctionDataSource keyName:cell.tag];
+        EtaoGroupBuyAuctionDataSource* datasource = nil;
+        if(![[ETDataCenter dataCenter] isExist:datasource_key]){
+            datasource = [[[EtaoGroupBuyAuctionDataSource alloc]initWithSettingItem:cell]autorelease];
+            [[ETDataCenter dataCenter] addDataSource:datasource withKey:datasource_key];
+        }
+
+
+        if (!_isMap) {
+            EtaoTuanListController* ctrl = [[[EtaoTuanListController alloc]init]autorelease];
+            [ctrl watchWithKey:datasource_key];
+            [ctrl watchWithDatasource:_locationDataSource];
+            //调整窗体大小
+            CGRect frame = ctrl.view.frame;
+            frame.size.height = 416-30;
+            ctrl.view.frame = frame;
+            return ctrl;
+        }
+        else{
+            EtaoTuanListForMapController* ctrl = [[[EtaoTuanListForMapController alloc]init]autorelease];
+            [ctrl watchWithKey:datasource_key];
+            [ctrl watchWithDatasource:_locationDataSource];
+            //调整窗体大小
+            CGRect frame = ctrl.view.frame;
+            frame.size.height = 416-MAP_HEIGHT-30;
+            ctrl.view.frame = frame;
+            return ctrl;
+        }
+        
+    }
+    else{
+        if (!_isMap) {
+            CGRect frame = _settingBySlide.view.frame;
+            frame.size.height = 416-30;
+            _settingBySlide.view.frame = frame;
+        }
+        else{
+            CGRect frame = _settingBySlide.view.frame;
+            frame.size.height = 416-MAP_HEIGHT-30;
+            _settingBySlide.view.frame = frame;
+        }
+        return _settingBySlide;
+    }
+}
+
+//检测到滑动或者加载
+- (void)slidePageForColAtIndexPath:(NSNumber *)index withCtrls:(UIViewController *)controller {
+    
+    _currentPage = [index intValue];
+    //图标切换
+    if([index intValue]< self.cells.count){
+        if(_isMap){
+            [self showMapButton];
+             EtaoTuanSettingItem* cell = [self.cells objectAtIndex:[index integerValue]];
+            [_mapView watchWithKey:[EtaoGroupBuyAuctionDataSource keyName:cell.tag]];
+        }
+        else{
+            [self showListButton];
+        }
+    }
+    else{
+        if (!_isMap) {
+            CGRect frame = _settingBySlide.view.frame;
+            frame.size.height = 416-30;
+            _settingBySlide.view.frame = frame;
+        }
+        else{
+            CGRect frame = _settingBySlide.view.frame;
+            frame.size.height = 416-MAP_HEIGHT-30;
+            _settingBySlide.view.frame = frame;
+        }
+        [self showDoneButton];
+    }
+}
+
+- (NSMutableArray*)getAllHeaders
+{
+    NSMutableArray* headers = [[[NSMutableArray alloc]init]autorelease];
+    for(EtaoTuanSettingItem* cell in self.cells){
+        [headers addObject:cell.tag];
+    }
+    [headers addObject:@"选择分类"];
+    return headers;
+}
+
+- (NSMutableArray*)getAllKeys
+{
+    NSMutableArray* keys = [[[NSMutableArray alloc]init]autorelease];
+    for(EtaoTuanSettingItem* cell in self.cells){
+        [keys addObject:[NSString stringWithFormat:@"%@_%d",cell.tag,_isMap]];//类似 KTV 的key格式
+    }
+    [keys addObject:@"选择分类"];
+    return keys;
+}
+
+
+#pragma mark -V buttons
+/*********** home界面按钮相关 **********/
+//城市按钮
+- (void)cityButtonClick:(id)sender{
+    if(nil == _cityView){
+        _cityView = [[EtaoTuanCityController alloc]init];
+        [_cityView watchWithDatasource:_locationDataSource];
+    }
+    ETaoUINavigationController *nav = [[[ETaoUINavigationController alloc]initWithRootViewController:_cityView andColor:[UIColor colorWithRed:43/255.0f green:166/255.0 blue:210/255.0f alpha:1.0]]autorelease];
+    
+    EtaoUIBarButtonItem *back = [[[EtaoUIBarButtonItem alloc]initWithTitle:@"返回" bkColor:[UIColor clearColor]target:self action:@selector(UIBarButtonHomeClick:)]autorelease];
+    _cityView.navigationItem.leftBarButtonItem = back;
+    
+    _cityView.title = @"当前城市";
+    nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [[EtaoTuanHomeViewController getNavgationController] presentModalViewController:nav animated:YES];
+    
+}
+
+//主nav 右侧模式切换按钮
+- (void) UIBarButtonSwitchDisplyMode:(UIBarButtonItem*)sender{
+    if(_currentPage <self.cells.count){
+        if (_isMap){              
+            [self disappearMap];
+        }
+        else { 
+            [self appearMap];
+        } 
+    }
+}
+
+//主nav返回
+- (void) UIBarButtonHomeClick:(UIBarButtonItem*)sender{ 
+    //关闭定位
+    [[ETLocation location] off];
+    
+    [[self parentViewController] dismissModalViewControllerAnimated:YES];  
+    [_cityButton performSelector:@selector(doArrow) withObject:nil afterDelay:0]; 
+} 
+
+//上提的setting nav 有侧完成按钮
+- (void) UIBarButtonDoneClick:(UIBarButtonItem*)sender
+{
+    [[_settingByTouch parentViewController] dismissModalViewControllerAnimated:YES];
+    self.cells = [_settingDataSource getSelectedItems];
+    [_settingBySlide.tableView reloadData];
+    [_settingByTouch.tableView reloadData];
+    [_slideView reloadData];
+    [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-SettingDone"];
+}
+
+//上提的setting nav 左侧返回按钮
+- (void) UIBarButtonBackClick:(UIBarButtonItem*)sender
+{ 
+    [[_settingByTouch parentViewController] dismissModalViewControllerAnimated:YES];
+} 
+
+#pragma mark -V others
+/*********** 展现相关 **********/
+//展现 map view
+- (void)disappearMap{
+    if (_isMap) {              
+        _isMap = NO;
+        [_slideView reloadPage:[NSNumber numberWithInt:_currentPage]];
+        [EtaoTuanCommonAnimations disMapAnimation:_slideView.view withMapView:_mapView.view];
+        [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-ChangeListMode"];
+    }
+    if(_currentPage < _cells.count){
+        [self showMapButton];
+    }
+}
+- (void)appearMap{
+    if(!_isMap){ 
+        _isMap = YES;
+        [_slideView reloadPage:[NSNumber numberWithInt:_currentPage]];
+        [EtaoTuanCommonAnimations showMapAnimation:_slideView.view withMapView:_mapView.view];
+        [TBUserTrack trackPage:self eventId:TB_USERTRACK_EVENT_PAGE_CTL_CLICKED arg1:@"Button-ChangeMapMode"];
+    } 
+    if(_currentPage < _cells.count){
+        [self showListButton];
+    }
+}
+
+//展现setting view
+- (void)appearSetting{
+    [_settingByTouch.tableView reloadData];
+    ETaoUINavigationController *nav =[[[ETaoUINavigationController alloc]initWithRootViewController:_settingByTouch andColor: [UIColor colorWithRed:43/255.0f green:166/255.0f blue:210/255.0f alpha:1.0]]autorelease]; 
+    
+    EtaoUIBarButtonItem *back = [[[EtaoUIBarButtonItem alloc] initWithTitle:@"返回" bkColor:[UIColor clearColor] target:self action:@selector(UIBarButtonBackClick:)]autorelease];
+    _settingByTouch.navigationItem.leftBarButtonItem = back;
+    
+    EtaoUIBarButtonItem *done = [[[EtaoUIBarButtonItem alloc] initWithTitle:@"完成" bkColor:[UIColor clearColor] target:self action:@selector(UIBarButtonDoneClick:)]autorelease];
+    _settingByTouch.navigationItem.rightBarButtonItem = done;
+    
+    nav.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    [self presentModalViewController:nav animated:YES]; 
+}
+
+- (void)disappearSetting{
+    
+}
+
+- (void)showListButton{
+    EtaoUIBarButtonItem *switchbtn = [[[EtaoUIBarButtonItem alloc] initWithTitle:@"列表" bkColor:[UIColor colorWithRed:40/255.0f green:134/255.0f blue:174/255.0f alpha:1.0] target:self action:@selector(UIBarButtonSwitchDisplyMode:)]autorelease];
+    self.navigationItem.rightBarButtonItem = switchbtn;
+}
+
+- (void)showMapButton{
+    EtaoUIBarButtonItem *switchbtn = [[[EtaoUIBarButtonItem alloc] initWithTitle:@"地图" bkColor:[UIColor colorWithRed:40/255.0f green:134/255.0f blue:174/255.0f alpha:1.0] target:self action:@selector(UIBarButtonSwitchDisplyMode:)]autorelease];
+    self.navigationItem.rightBarButtonItem = switchbtn;
+}
+
+- (void)showDoneButton{
+    EtaoUIBarButtonItem *display = [[[EtaoUIBarButtonItem alloc] initWithTitle:@"完成" bkColor:[UIColor clearColor] target:self action:@selector(UIBarButtonDoneClick:)]autorelease];
+    self.navigationItem.rightBarButtonItem = display;
+}
+
+- (void)reloadPage{
+    [_slideView reloadPage:[NSNumber numberWithInt:_currentPage]];
+}
+
+@end

@@ -1,0 +1,473 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers
+END
+TBLogisticsTraceSearchResult.h
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLogisticsTraceSearchResult.h
+END
+TBWapItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBWapItem.h
+END
+TBShop.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBShop.h
+END
+TBItemJhsPromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemJhsPromotion.h
+END
+TBRequests.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBRequests.h
+END
+TBOrder.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBOrder.h
+END
+TBUser.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUser.h
+END
+TBLoveTagItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLoveTagItem.h
+END
+TBItemCat.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemCat.h
+END
+TBLogisticsCompany.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLogisticsCompany.h
+END
+TBTrade.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBTrade.h
+END
+TBModel.h
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBModel.h
+END
+TBCartOrderPostMode.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBCartOrderPostMode.h
+END
+MTOPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPRequest.h
+END
+TBCategoryDTOItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBCategoryDTOItem.h
+END
+TBUtility.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUtility.h
+END
+TBItemLimitPromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemLimitPromotion.h
+END
+TBShopScore.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBShopScore.h
+END
+TBSecKillItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBSecKillItem.h
+END
+TBItemPromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemPromotion.h
+END
+TBPostageMode.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBPostageMode.h
+END
+TBLocation.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLocation.h
+END
+TBSellRecordItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBSellRecordItem.h
+END
+TBAuctionTagItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBAuctionTagItem.h
+END
+TBUserTrackableWindow.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUserTrackableWindow.h
+END
+TBSession.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBSession.h
+END
+TBModels.h
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBModels.h
+END
+TBItemDirectionalPromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemDirectionalPromotion.h
+END
+MTOPLoginRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPLoginRequest.h
+END
+TBTransitStepInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBTransitStepInfo.h
+END
+TBWuliuTraceRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBWuliuTraceRequest.h
+END
+TBFavoriteItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBFavoriteItem.h
+END
+TBItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItem.h
+END
+TBRateListRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBRateListRequest.h
+END
+TBItemManjiusongPromotion.h
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemManjiusongPromotion.h
+END
+TBItemPromotionBase.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemPromotionBase.h
+END
+TBItemPurchaseRuleItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemPurchaseRuleItem.h
+END
+TBTaoCodeDetail.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBTaoCodeDetail.h
+END
+TBSku.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBSku.h
+END
+TBPostage.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBPostage.h
+END
+TBUserTrack.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUserTrack.h
+END
+TBCartOrderItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBCartOrderItem.h
+END
+TBAuctionDetailItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBAuctionDetailItem.h
+END
+TBErrorResponse.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBErrorResponse.h
+END
+TBUserCredit.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUserCredit.h
+END
+TOPSearchRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TOPSearchRequest.h
+END
+TBPropValue.h
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBPropValue.h
+END
+TBSDK.h
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBSDK.h
+END
+TBWapShop.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBWapShop.h
+END
+TBLoveItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLoveItem.h
+END
+TBAuctionDeliveryItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBAuctionDeliveryItem.h
+END
+TOPRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TOPRequest.h
+END
+TBShippingAddress.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBShippingAddress.h
+END
+MTOPSearchRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPSearchRequest.h
+END
+TBUserTrackTypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUserTrackTypes.h
+END
+TBItemImg.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemImg.h
+END
+TBItemNavCat.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemNavCat.h
+END
+TBQRCodeItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBQRCodeItem.h
+END
+MTOPShopItemsRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPShopItemsRequest.h
+END
+TBJhsGroup.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBJhsGroup.h
+END
+TBJhsJoinResult.h
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBJhsJoinResult.h
+END
+TBJhsItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBJhsItem.h
+END
+MTOPShopAuctionSearchRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPShopAuctionSearchRequest.h
+END
+TBCartItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBCartItem.h
+END
+TBUserTrackCategories.h
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBUserTrackCategories.h
+END
+TBWapPromotionInfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBWapPromotionInfo.h
+END
+TBAuctionTagGroup.h
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBAuctionTagGroup.h
+END
+TBPropList.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBPropList.h
+END
+TOP.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TOP.h
+END
+TBShipping.h
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBShipping.h
+END
+TBItemSearch.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemSearch.h
+END
+MTOPSmartNavigationRequest.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/MTOPSmartNavigationRequest.h
+END
+TBStoredData.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBStoredData.h
+END
+TBRateRecord.h
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBRateRecord.h
+END
+TBNavigationDelegateHelper.h
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBNavigationDelegateHelper.h
+END
+TBItemCategory.h
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBItemCategory.h
+END
+TBTraceRecord.h
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBTraceRecord.h
+END
+TBLoveTagGroupItem.h
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/repos/twc/!svn/ver/14977/trunk/twc/etao/ios/etao4iphone/TBSDK/Release/TBSDK.framework/Headers/TBLoveTagGroupItem.h
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 76
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide
+END
+ETPageSlideController.h
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageSlideController.h
+END
+ETPageSlideController.m
+K 25
+svn:wc:ra_dav:version-url
+V 100
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageSlideController.m
+END
+ETPageSlideDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageSlideDelegate.h
+END
+ETPageTouchDelegate.h
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageTouchDelegate.h
+END
+ETPageTouchView.h
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageTouchView.h
+END
+ETPageTouchView.m
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/repos/twc/!svn/ver/14041/trunk/twc/etao/ios/etao4iphone/Classes/ETPageSlide/ETPageTouchView.m
+END

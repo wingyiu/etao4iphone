@@ -1,0 +1,74 @@
+//
+//  EtaoTuanSettingItem.m
+//  etao4iphone
+//
+//  Created by  on 11-11-23.
+//  Copyright (c) 2011年 __MyCompanyName__. All rights reserved.
+//
+
+#import "EtaoTuanSettingItem.h"
+
+@implementation EtaoTuanSettingItem
+
+@synthesize tag = _tag;
+@synthesize text = _text;
+@synthesize catid = _catid;
+@synthesize siteid = _siteid;
+@synthesize type = _type;
+@synthesize selected = _selected;
+@synthesize order = _order;
+@synthesize choosed = _choosed;
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if(self){
+        self.tag = [aDecoder decodeObjectForKey:@"tag"];
+        self.text = [aDecoder decodeObjectForKey:@"text"];
+        self.catid = [aDecoder decodeObjectForKey:@"catid"];
+        self.siteid = [aDecoder decodeObjectForKey:@"siteid"];
+        self.type = [aDecoder decodeObjectForKey:@"type"];
+        self.selected = [aDecoder decodeObjectForKey:@"selected"];
+        self.order = [aDecoder decodeObjectForKey:@"order"];
+        self.choosed = [aDecoder decodeObjectForKey:@"choosed"];
+    }
+    return self;
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:_tag forKey:@"tag"];
+    [aCoder encodeObject:_text forKey:@"text"];
+    [aCoder encodeObject:_catid forKey:@"catid"];
+    [aCoder encodeObject:_siteid forKey:@"siteid"];
+    [aCoder encodeObject:_type forKey:@"type"];
+    [aCoder encodeObject:_selected forKey:@"selected"];
+    [aCoder encodeObject:_order forKey:@"order"];
+    [aCoder encodeObject:_choosed forKey:@"choosed"];
+}
+
+
+-(void)dealloc{
+    [_tag release];
+    [_text release];
+    [_catid release];
+    [_siteid release];
+    [_type release];
+    [_selected release];
+    [_order release];
+    [_choosed release];
+    [super dealloc];
+}
+
+
+-(NSComparisonResult)CellCompare:(EtaoTuanSettingItem*)cell
+{
+    if([self.selected isEqualToString:@"1"]&&[cell.selected isEqualToString:@"0"])
+        return NSOrderedAscending;
+    else if([self.selected isEqualToString:@"0"]&&[cell.selected isEqualToString:@"1"])
+        return NSOrderedDescending;
+    else
+        return NSOrderedSame;
+}
+
+
+@end
